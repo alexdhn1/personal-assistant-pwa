@@ -13,6 +13,7 @@ function makeMockClient(): GitHubClient {
       { name: 'note.md', path: 'assistant/note.md', type: 'file' as const, sha: 'sha1' },
     ]),
     writeFile: vi.fn().mockResolvedValue('sha2'),
+    createFile: vi.fn().mockResolvedValue('sha3'),
   }
 }
 

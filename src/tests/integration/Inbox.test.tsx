@@ -9,6 +9,7 @@ function makeMockClient(): GitHubClient {
     readFile: vi.fn().mockRejectedValue({ status: 404 }),
     listDir: vi.fn().mockResolvedValue([]),
     writeFile: vi.fn().mockResolvedValue('sha1'),
+    createFile: vi.fn().mockResolvedValue('sha2'),
   }
 }
 

@@ -14,6 +14,7 @@ function makeMockClient(): GitHubClient {
       { name: 'todo.md', path: 'assistant/todo.md', type: 'file' as const, sha: 'sha2' },
     ]),
     writeFile: vi.fn().mockResolvedValue('sha3'),
+    createFile: vi.fn().mockResolvedValue('sha4'),
   }
 }
 

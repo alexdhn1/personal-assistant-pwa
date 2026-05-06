@@ -34,7 +34,7 @@ export function useAuth() {
       settings.githubRepo,
       settings.defaultBranch
     )
-    setAuth(token, client)
+    setAuth(token, client, password)
   }
 
   async function unlock(password: string): Promise<void> {
@@ -60,7 +60,7 @@ export function useAuth() {
         settings.githubRepo,
         settings.defaultBranch
       )
-      setAuth(token, client)
+      setAuth(token, client, password)
     } catch (err) {
       const newAttempts = currentAttempts + 1
       if (newAttempts >= MAX_ATTEMPTS) {

@@ -11,6 +11,7 @@ function makeMockClient(existing?: string): GitHubClient {
       : vi.fn().mockRejectedValue({ status: 404 }),
     listDir: vi.fn().mockResolvedValue([]),
     writeFile: vi.fn().mockResolvedValue('sha2'),
+    createFile: vi.fn().mockResolvedValue('sha3'),
   }
 }
 

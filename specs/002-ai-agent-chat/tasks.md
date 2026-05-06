@@ -19,11 +19,11 @@
 
 **Purpose**: Install new dependencies, extend existing config
 
-- [ ] T001 Install openai and @anthropic-ai/sdk packages via `npm install openai @anthropic-ai/sdk`
-- [ ] T002 [P] Extend Dexie schema with `llmKeys` table in src/lib/storage.ts
-- [ ] T003 [P] Add LLM provider settings to Zustand settings store in src/stores/settings.ts
-- [ ] T004 [P] Add /chat route to React Router config in src/App.tsx
-- [ ] T005 [P] Add Chat nav link to Layout component in src/components/Layout.tsx
+- [X] T001 Install openai and @anthropic-ai/sdk packages via `npm install openai @anthropic-ai/sdk`
+- [X] T002 [P] Extend Dexie schema with `llmKeys` table in src/lib/storage.ts
+- [X] T003 [P] Add LLM provider settings to Zustand settings store in src/stores/settings.ts
+- [X] T004 [P] Add /chat route to React Router config in src/App.tsx
+- [X] T005 [P] Add Chat nav link to Layout component in src/components/Layout.tsx
 
 ---
 
@@ -33,16 +33,16 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T006 Write unit test for agent tools (list_files, read_file, update_file, create_file) in src/tests/unit/agent-tools.test.ts
-- [ ] T007 Implement agent tool definitions and executors in src/lib/agent-tools.ts
-- [ ] T008 Write unit test for LLM client interface (streaming mock, tool call parsing, both providers) in src/tests/unit/llm-client.test.ts
-- [ ] T009 Implement LLM client abstract interface in src/lib/llm-client.ts
-- [ ] T010 [P] Implement OpenAI provider (streaming + function calling) in src/lib/llm-openai.ts
-- [ ] T011 [P] Implement Anthropic provider (streaming + tool use) in src/lib/llm-anthropic.ts
-- [ ] T012 Write unit test for agent loop (LLM→tool→LLM→response, max 10 cap, error recovery) in src/tests/unit/agent-loop.test.ts
-- [ ] T013 Implement agent orchestration loop in src/lib/agent-loop.ts
-- [ ] T014 Write unit test for context builder (system prompt from file tree + headings, token limit) in src/tests/unit/context-builder.test.ts
-- [ ] T015 Implement context builder (system prompt with arborescence + headings) in src/lib/context-builder.ts
+- [X] T006 Write unit test for agent tools (list_files, read_file, update_file, create_file) in src/tests/unit/agent-tools.test.ts
+- [X] T007 Implement agent tool definitions and executors in src/lib/agent-tools.ts
+- [X] T008 Write unit test for LLM client interface (streaming mock, tool call parsing, both providers) in src/tests/unit/llm-client.test.ts
+- [X] T009 Implement LLM client abstract interface in src/lib/llm-client.ts
+- [X] T010 [P] Implement OpenAI provider (streaming + function calling) in src/lib/llm-openai.ts
+- [X] T011 [P] Implement Anthropic provider (streaming + tool use) in src/lib/llm-anthropic.ts
+- [X] T012 Write unit test for agent loop (LLM→tool→LLM→response, max 10 cap, error recovery) in src/tests/unit/agent-loop.test.ts
+- [X] T013 Implement agent orchestration loop in src/lib/agent-loop.ts
+- [X] T014 Write unit test for context builder (system prompt from file tree + headings, token limit) in src/tests/unit/context-builder.test.ts
+- [X] T015 Implement context builder (system prompt with arborescence + headings) in src/lib/context-builder.ts
 
 **Checkpoint**: Foundation ready — agent loop can execute tool calls and stream responses from both providers
 
@@ -56,13 +56,13 @@
 
 ### Tests for US2
 
-- [ ] T016 [P] [US2] Write unit test for useLLMKey hook (encrypt/store/retrieve/decrypt round-trip) in src/tests/unit/useLLMKey.test.ts
-- [ ] T017 [P] [US2] Write integration test for LLMSetup UI (key input, provider select, submit) in src/tests/integration/LLMSetup.test.tsx
+- [X] T016 [P] [US2] Write unit test for useLLMKey hook (encrypt/store/retrieve/decrypt round-trip) in src/tests/unit/useLLMKey.test.ts
+- [X] T017 [P] [US2] Write integration test for LLMSetup UI (key input, provider select, submit) in src/tests/integration/LLMSetup.test.tsx
 
 ### Implementation for US2
 
-- [ ] T018 [US2] Implement useLLMKey hook (encrypt/store/decrypt LLM key using existing crypto.ts) in src/hooks/useLLMKey.ts
-- [ ] T019 [US2] Implement LLMSetup component (provider dropdown + key input + save button) in src/components/LLMSetup.tsx
+- [X] T018 [US2] Implement useLLMKey hook (encrypt/store/decrypt LLM key using existing crypto.ts) in src/hooks/useLLMKey.ts
+- [X] T019 [US2] Implement LLMSetup component (provider dropdown + key input + save button) in src/components/LLMSetup.tsx
 
 **Checkpoint**: LLM API key can be stored securely and retrieved — prerequisite for all chat functionality
 
@@ -76,16 +76,16 @@
 
 ### Tests for US1
 
-- [ ] T020 [P] [US1] Write integration test for Chat page (send message → agent responds with tool actions) in src/tests/integration/Chat.test.tsx
+- [X] T020 [P] [US1] Write integration test for Chat page (send message → agent responds with tool actions) in src/tests/integration/Chat.test.tsx
 
 ### Implementation for US1
 
-- [ ] T021 [US1] Create Zustand chat store (messages, streaming state, token counter, error) in src/stores/chat.ts
-- [ ] T022 [US1] Implement useAgent hook (connects chat store + agent loop + GitHub client + context builder) in src/hooks/useAgent.ts
-- [ ] T023 [US1] Implement ChatBubble component (user/assistant/tool message rendering with markdown) in src/components/ChatBubble.tsx
-- [ ] T024 [P] [US1] Implement ChatInput component (text input + send button + disabled while streaming) in src/components/ChatInput.tsx
-- [ ] T025 [P] [US1] Implement ToolCallIndicator component ("Reading todo.md…" visual feedback + action summary "✓ Updated todo.md") in src/components/ToolCallIndicator.tsx
-- [ ] T026 [US1] Implement Chat page (message list + input + LLMSetup gate + new conversation button) in src/pages/Chat.tsx
+- [X] T021 [US1] Create Zustand chat store (messages, streaming state, token counter, error) in src/stores/chat.ts
+- [X] T022 [US1] Implement useAgent hook (connects chat store + agent loop + GitHub client + context builder) in src/hooks/useAgent.ts
+- [X] T023 [US1] Implement ChatBubble component (user/assistant/tool message rendering with markdown) in src/components/ChatBubble.tsx
+- [X] T024 [P] [US1] Implement ChatInput component (text input + send button + disabled while streaming) in src/components/ChatInput.tsx
+- [X] T025 [P] [US1] Implement ToolCallIndicator component ("Reading todo.md…" visual feedback + action summary "✓ Updated todo.md") in src/components/ToolCallIndicator.tsx
+- [X] T026 [US1] Implement Chat page (message list + input + LLMSetup gate + new conversation button) in src/pages/Chat.tsx
 
 **Checkpoint**: Full agent loop works — user can organize files via natural language chat
 
@@ -99,10 +99,10 @@
 
 ### Implementation for US3
 
-- [ ] T027 [US3] Add streaming text display to ChatBubble (progressive rendering as tokens arrive) in src/components/ChatBubble.tsx
-- [ ] T028 [US3] Add "New conversation" button with state reset in src/pages/Chat.tsx
-- [ ] T029 [US3] Add token counter display (approximate input/output tokens per session) in src/pages/Chat.tsx
-- [ ] T030 [US3] Add auto-scroll to bottom on new messages in src/pages/Chat.tsx
+- [X] T027 [US3] Add streaming text display to ChatBubble (progressive rendering as tokens arrive) in src/components/ChatBubble.tsx
+- [X] T028 [US3] Add "New conversation" button with state reset in src/pages/Chat.tsx
+- [X] T029 [US3] Add token counter display (approximate input/output tokens per session) in src/pages/Chat.tsx
+- [X] T030 [US3] Add auto-scroll to bottom on new messages in src/pages/Chat.tsx
 
 **Checkpoint**: Chat UI is polished with streaming, counters, and conversation management
 
@@ -116,9 +116,9 @@
 
 ### Implementation for US4
 
-- [ ] T031 [US4] Extend context builder: add file heading extraction (read first # heading of each file) in src/lib/context-builder.ts
-- [ ] T032 [US4] Extend context builder: add token budget management (truncate/summarize if arborescence > 8000 tokens) in src/lib/context-builder.ts
-- [ ] T033 [US4] Extend context builder: write system prompt with behavioral instructions (range dans le bon fichier, crée si nécessaire) in src/lib/context-builder.ts
+- [X] T031 [US4] Extend context builder: add file heading extraction (read first # heading of each file) in src/lib/context-builder.ts
+- [X] T032 [US4] Extend context builder: add token budget management (truncate/summarize if arborescence > 8000 tokens) in src/lib/context-builder.ts
+- [X] T033 [US4] Extend context builder: write system prompt with behavioral instructions (range dans le bon fichier, crée si nécessaire) in src/lib/context-builder.ts
 
 **Checkpoint**: Agent intelligently routes content to correct files without explicit user instruction
 
@@ -132,9 +132,9 @@
 
 ### Implementation for US5
 
-- [ ] T034 [US5] Add provider/model selection UI to settings or LLMSetup in src/components/LLMSetup.tsx
-- [ ] T035 [US5] Wire provider switch to LLM client factory (swap provider at runtime) in src/hooks/useAgent.ts
-- [ ] T036 [US5] Handle provider-specific error messages (different error formats) in src/lib/llm-openai.ts and src/lib/llm-anthropic.ts
+- [X] T034 [US5] Add provider/model selection UI to settings or LLMSetup in src/components/LLMSetup.tsx
+- [X] T035 [US5] Wire provider switch to LLM client factory (swap provider at runtime) in src/hooks/useAgent.ts
+- [X] T036 [US5] Handle provider-specific error messages (different error formats) in src/lib/llm-openai.ts and src/lib/llm-anthropic.ts
 
 **Checkpoint**: Both providers work interchangeably with same tool definitions
 
@@ -144,10 +144,10 @@
 
 **Purpose**: Error handling, rate limiting, edge cases, E2E
 
-- [ ] T037 [P] Add exponential backoff on 429 rate limit responses in src/lib/llm-client.ts
-- [ ] T038 [P] Add SHA conflict retry logic (re-fetch + retry once) in src/lib/agent-tools.ts
-- [ ] T039 [P] Add invalid/expired API key detection with clear error message + re-setup prompt in src/hooks/useAgent.ts
-- [ ] T040 [P] Add offline detection (disable chat input when navigator.onLine is false) in src/pages/Chat.tsx
+- [X] T037 [P] Add exponential backoff on 429 rate limit responses in src/lib/llm-client.ts
+- [X] T038 [P] Add SHA conflict retry logic (re-fetch + retry once) in src/lib/agent-tools.ts
+- [X] T039 [P] Add invalid/expired API key detection with clear error message + re-setup prompt in src/hooks/useAgent.ts
+- [X] T040 [P] Add offline detection (disable chat input when navigator.onLine is false) in src/pages/Chat.tsx
 - [ ] T041 Write E2E test spec (with intercepted API) for full chat flow in src/tests/e2e/agent-chat.spec.ts
 - [ ] T042 Run quickstart.md validation (full manual test of the flow)
 

@@ -1,5 +1,13 @@
 import Dexie, { type Table } from 'dexie'
 
+export interface LLMKeyRecord {
+  id: 'llm-api-key'
+  encryptedKey: ArrayBuffer
+  passwordSalt: Uint8Array
+  encryptionIv: Uint8Array
+  provider: 'openai' | 'anthropic'
+}
+
 export interface AuthRecord {
   id: 'main'
   encryptedToken: ArrayBuffer
@@ -28,6 +36,7 @@ export class AssistantDB extends Dexie {
   auth!: Table<AuthRecord, string>
   preferences!: Table<PreferencesRecord, string>
   filesCache!: Table<FileCacheRecord, string>
+  llmKeys!: Table<LLMKeyRecord, string>
 
   constructor() {
     super('personal-assistant-db')
@@ -35,6 +44,12 @@ export class AssistantDB extends Dexie {
       auth: 'id',
       preferences: 'id',
       filesCache: 'path',
+    })
+    this.version(2).stores({
+      auth: 'id',
+      preferences: 'id',
+      filesCache: 'path',
+      llmKeys: 'id',
     })
   }
 }

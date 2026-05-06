@@ -26,6 +26,12 @@ export interface WriteFileParams {
   message: string
 }
 
+export interface CreateFileParams {
+  path: string
+  content: string
+  message: string
+}
+
 // Minimal shape of the Octokit repos API we use — allows easy test injection
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyFn = (...args: any[]) => Promise<{ data: unknown }>
@@ -63,13 +69,10 @@ export function createGitHubClient(
     const data = response.data as { type: string; content: string; sha: string }
     if (data.type !== 'file') throw new Error(`${path} is not a file`)
     const base64 = data.content.replace(/\s/g, '')
-    console.log('[github-client] content starts with:', data.content.substring(0, 30))
     const binary = atob(base64)
     const bytes = new Uint8Array(binary.length)
     for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
-    console.log('[github-client] first 20 bytes:', Array.from(bytes.slice(0, 20)))
     const decoded = new TextDecoder('utf-8').decode(bytes)
-    console.log('[github-client] decoded (first 80):', decoded.substring(0, 80))
     return { content: decoded, sha: data.sha }
   }
 
@@ -105,7 +108,23 @@ export function createGitHubClient(
     return data.content.sha
   }
 
-  return { readFile, listDir, writeFile }
+  async function createFile(params: CreateFileParams): Promise<string> {
+    const encoded = btoa(unescape(encodeURIComponent(params.content)))
+    const response = await wrapAuthErrors(
+      octokit.rest.repos.createOrUpdateFileContents({
+        owner,
+        repo,
+        path: params.path,
+        message: params.message,
+        content: encoded,
+        branch,
+      })
+    )
+    const data = response.data as { content: { sha: string } }
+    return data.content.sha
+  }
+
+  return { readFile, listDir, writeFile, createFile }
 }
 
 export type GitHubClient = ReturnType<typeof createGitHubClient>

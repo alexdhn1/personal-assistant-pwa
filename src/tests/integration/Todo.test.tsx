@@ -19,6 +19,7 @@ function makeMockClient(): GitHubClient {
     readFile: vi.fn().mockResolvedValue({ content: SAMPLE_TODO, sha: 'sha1' }),
     listDir: vi.fn().mockResolvedValue([]),
     writeFile: vi.fn().mockResolvedValue('sha2'),
+    createFile: vi.fn().mockResolvedValue('sha3'),
   }
 }
 

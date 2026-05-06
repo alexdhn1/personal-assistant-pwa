@@ -7,6 +7,7 @@ import Auth from './pages/Auth'
 import Todo from './pages/Todo'
 import Editor from './pages/Editor'
 import Inbox from './pages/Inbox'
+import Chat from './pages/Chat'
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
@@ -49,6 +50,7 @@ export default function App() {
           <Route path="todo" element={<Todo />} />
           <Route path="editor" element={<Editor />} />
           <Route path="inbox" element={<Inbox />} />
+          <Route path="chat" element={<Chat />} />
         </Route>
         <Route path="*" element={<Navigate to="/todo" replace />} />
       </Routes>

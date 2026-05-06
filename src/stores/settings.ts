@@ -7,6 +7,8 @@ interface Settings {
   rootFolder: string
   defaultBranch: string
   theme: 'light' | 'dark' | 'auto'
+  llmProvider: 'openai' | 'anthropic'
+  llmModel: string
 }
 
 interface SettingsState extends Settings {
@@ -21,6 +23,8 @@ export const useSettingsStore = create<SettingsState>()(
       rootFolder: 'assistant/',
       defaultBranch: 'main',
       theme: 'auto',
+      llmProvider: 'openai',
+      llmModel: 'gpt-4o',
       update: (partial) => set(partial),
     }),
     { name: 'assistant-settings' }
