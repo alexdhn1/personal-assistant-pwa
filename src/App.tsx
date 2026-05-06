@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthStore } from './stores/auth'
 import { useSettingsStore } from './stores/settings'
 import Layout from './components/Layout'
@@ -35,7 +35,7 @@ export default function App() {
   }, [theme])
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/auth" element={<Auth />} />
         <Route
@@ -54,6 +54,6 @@ export default function App() {
         </Route>
         <Route path="*" element={<Navigate to="/todo" replace />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
