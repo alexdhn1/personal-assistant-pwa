@@ -16,7 +16,7 @@ interface SettingsState extends Settings {
 export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
-      githubOwner: '',
+      githubOwner: 'alexdhn1',
       githubRepo: 'obsidian-vault',
       rootFolder: 'assistant/',
       defaultBranch: 'main',

@@ -62,7 +62,14 @@ export function createGitHubClient(
     )
     const data = response.data as { type: string; content: string; sha: string }
     if (data.type !== 'file') throw new Error(`${path} is not a file`)
-    const decoded = atob(data.content.replace(/\n/g, ''))
+    const base64 = data.content.replace(/\s/g, '')
+    console.log('[github-client] content starts with:', data.content.substring(0, 30))
+    const binary = atob(base64)
+    const bytes = new Uint8Array(binary.length)
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
+    console.log('[github-client] first 20 bytes:', Array.from(bytes.slice(0, 20)))
+    const decoded = new TextDecoder('utf-8').decode(bytes)
+    console.log('[github-client] decoded (first 80):', decoded.substring(0, 80))
     return { content: decoded, sha: data.sha }
   }
 

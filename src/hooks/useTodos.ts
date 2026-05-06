@@ -7,7 +7,8 @@ const TODO_PATH = 'assistant/todo.md'
 
 export function useTodos(client: GitHubClient) {
   const { rootFolder } = useSettingsStore.getState()
-  const todoPath = rootFolder ? `${rootFolder}/todo.md` : TODO_PATH
+  const root = rootFolder?.replace(/\/+$/, '')
+  const todoPath = root ? `${root}/todo.md` : TODO_PATH
 
   const [sections, setSections] = useState<TodoSection[]>([])
   const [sha, setSha] = useState<string>('')
