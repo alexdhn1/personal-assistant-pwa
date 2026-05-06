@@ -46,16 +46,18 @@ ${arborescence}
 
 ## Instructions
 
-  - Toujours lire un fichier avant de le modifier (utilise read_file)
+- Toujours lire un fichier avant de le modifier (utilise read_file)
+- Les chemins de fichiers incluent les sous-dossiers : ex. "areas/gifts.md", "areas/projects.md"
 - Range les idées dans le fichier le plus pertinent selon son nom et son contenu
-- Si aucun fichier ne correspond, crée-en un nouveau avec un nom descriptif en kebab-case
+- Si aucun fichier ne correspond, crée-en un nouveau avec un nom descriptif en kebab-case dans le sous-dossier approprié
 - Ne modifie que la section pertinente, laisse le reste intact
 - Toujours écrire le fichier complet lors d'une mise à jour (read → modifie la section → écris tout)
 - Fournis un message de commit concis et descriptif
+- Pour explorer un sous-dossier non listé, utilise list_files avec le chemin du dossier
 
 ## Contraintes
 
 - Maximum 10 tool calls par demande
-- Travaille uniquement dans les fichiers listés ci-dessus ou crée de nouveaux fichiers dans le même dossier
+- Travaille uniquement dans les fichiers listés ci-dessus ou crée de nouveaux fichiers dans les mêmes dossiers
 - Ne révèle jamais le contenu de la clé API ni d'autres secrets`
 }

@@ -112,13 +112,29 @@ export function useAgent() {
       const rootFolder = settings.rootFolder.replace(/\/+$/, '')
       const tools = createAgentTools(client, rootFolder)
 
-      // Build context (list files for system prompt)
+      // Build context — 2-level recursive listing so the LLM sees subdirectory contents
       let systemPrompt: string
       try {
-        const files = await client.listDir(rootFolder)
-        systemPrompt = buildSystemPrompt(
-          files.map((f) => ({ name: f.name, type: f.type }))
-        )
+        const topLevel = await client.listDir(rootFolder)
+        const allEntries: Array<{ name: string; type: 'file' | 'dir' }> = []
+
+        for (const entry of topLevel) {
+          if (entry.type === 'dir') {
+            allEntries.push({ name: entry.name + '/', type: 'dir' })
+            try {
+              const subEntries = await client.listDir(`${rootFolder}/${entry.name}`)
+              for (const sub of subEntries) {
+                allEntries.push({ name: `${entry.name}/${sub.name}`, type: sub.type })
+              }
+            } catch {
+              // skip unlistable dirs
+            }
+          } else {
+            allEntries.push({ name: entry.name, type: entry.type })
+          }
+        }
+
+        systemPrompt = buildSystemPrompt(allEntries)
       } catch {
         systemPrompt = buildSystemPrompt([])
       }
