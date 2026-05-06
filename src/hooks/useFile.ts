@@ -1,6 +1,13 @@
 import { useState, useCallback } from 'react'
 import type { GitHubClient, FileEntry } from '../lib/github-client'
 
+export interface FileTreeNode {
+  name: string
+  path: string
+  type: 'file' | 'dir'
+  children: FileTreeNode[]
+}
+
 export function useFile(client: GitHubClient) {
   const [files, setFiles] = useState<FileEntry[]>([])
   const [content, setContent] = useState<string>('')
@@ -8,6 +15,10 @@ export function useFile(client: GitHubClient) {
   const [sha, setSha] = useState<string>('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  const [tree, setTree] = useState<FileTreeNode[]>([])
+  const [treeLoading, setTreeLoading] = useState(false)
+  const [treeError, setTreeError] = useState<string | null>(null)
 
   const loadDir = useCallback(
     async (path: string) => {
@@ -20,6 +31,46 @@ export function useFile(client: GitHubClient) {
         setError(err instanceof Error ? err.message : 'Failed to list directory')
       } finally {
         setLoading(false)
+      }
+    },
+    [client]
+  )
+
+  const loadTree = useCallback(
+    async (rootFolder: string) => {
+      setTreeLoading(true)
+      setTreeError(null)
+      try {
+        const root = rootFolder.replace(/\/+$/, '')
+        const topLevel = await client.listDir(root)
+        const nodes: FileTreeNode[] = []
+
+        for (const entry of topLevel) {
+          if (entry.type === 'file') {
+            if (!entry.name.endsWith('.md')) continue
+            nodes.push({ name: entry.name, path: entry.path, type: 'file', children: [] })
+          } else if (entry.type === 'dir') {
+            let children: FileTreeNode[] = []
+            try {
+              const subEntries = await client.listDir(entry.path)
+              children = subEntries
+                .filter((s) => s.type === 'file' && s.name.endsWith('.md'))
+                .map((s) => ({ name: s.name, path: s.path, type: 'file' as const, children: [] }))
+            } catch {
+              // skip unlistable dirs
+            }
+            if (children.length > 0) {
+              nodes.push({ name: entry.name, path: entry.path, type: 'dir', children })
+            }
+          }
+        }
+
+        setTree(nodes)
+      } catch (err) {
+        setTreeError(err instanceof Error ? err.message : 'Failed to load file tree')
+        setTree([])
+      } finally {
+        setTreeLoading(false)
       }
     },
     [client]
@@ -67,5 +118,5 @@ export function useFile(client: GitHubClient) {
     [client, currentPath, sha]
   )
 
-  return { files, content, currentPath, loading, error, loadDir, openFile, save }
+  return { files, content, currentPath, loading, error, loadDir, openFile, save, tree, treeLoading, treeError, loadTree }
 }
