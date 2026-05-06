@@ -5,7 +5,7 @@ import { useSettingsStore } from '../stores/settings'
 
 const TODO_PATH = 'assistant/todo.md'
 
-export function useTodos(client: GitHubClient) {
+export function useTodos(client: GitHubClient | null) {
   const { rootFolder } = useSettingsStore.getState()
   const root = rootFolder?.replace(/\/+$/, '')
   const todoPath = root ? `${root}/todo.md` : TODO_PATH
@@ -16,6 +16,7 @@ export function useTodos(client: GitHubClient) {
   const [error, setError] = useState<string | null>(null)
 
   const load = useCallback(async () => {
+    if (!client) return
     setLoading(true)
     setError(null)
     try {
@@ -31,6 +32,7 @@ export function useTodos(client: GitHubClient) {
 
   const commit = useCallback(
     async (updated: TodoSection[], message: string) => {
+      if (!client) return
       const content = serializeTodoFile(updated)
       const newSha = await client.writeFile({
         path: todoPath,

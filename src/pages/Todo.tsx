@@ -12,19 +12,17 @@ export default function Todo() {
   const navigate = useNavigate()
   const client = useGitHub()
   const clearAuth = useAuthStore((s) => s.clearAuth)
-
-  if (!client) {
-    navigate('/auth', { replace: true })
-    return null
-  }
-
+  const lastAgentWrite = useFilesStore((s) => s.lastAgentWrite)
   const { sections, loading, error, load, toggle, addTask, moveTask } = useTodos(client)
   const [moveMenu, setMoveMenu] = useState<{ itemId: string; from: string } | null>(null)
-  const lastAgentWrite = useFilesStore((s) => s.lastAgentWrite)
 
   useEffect(() => {
+    if (!client) {
+      navigate('/auth', { replace: true })
+      return
+    }
     load()
-  }, [])
+  }, [client])
 
   // Reload when agent writes a file
   useEffect(() => {
@@ -38,6 +36,8 @@ export default function Todo() {
       navigate('/auth', { replace: true })
     }
   }, [error])
+
+  if (!client) return null
 
   if (loading) {
     return (
