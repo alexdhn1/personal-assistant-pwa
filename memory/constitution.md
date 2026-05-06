@@ -48,10 +48,11 @@ critiques (lire un fichier, l'éditer, le commit).
 
 ### P4 — Sécurité des secrets
 
-Le Personal Access Token GitHub est le seul secret. Stockage : chiffré dans
-le navigateur (Web Crypto API + clé dérivée d'un mot de passe utilisateur),
-**jamais** en clair dans localStorage. À l'ouverture de l'app, l'utilisateur
-saisit son mot de passe pour déchiffrer le token.
+Le Personal Access Token GitHub et la clé API LLM sont les secrets de l'app.
+Stockage : chiffrés dans le navigateur (Web Crypto API + clé dérivée d'un
+mot de passe utilisateur), **jamais** en clair dans localStorage. À
+l'ouverture de l'app, l'utilisateur saisit son mot de passe pour déchiffrer
+les secrets.
 
 Aucun secret n'est embarqué dans le bundle JS. Aucun secret n'est commité
 dans le repo de l'app. Si un secret manager GitHub Actions est nécessaire

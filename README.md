@@ -1,8 +1,111 @@
-# Personal Assistant PWA — Scaffolding
+# Personal Assistant PWA
 
-Pack spec-kit prêt à l'emploi pour démarrer le projet.
+A mobile-first Progressive Web App that reads and writes Markdown files from a private GitHub repository (no backend required).
 
-## Contenu
+## Features
+
+- **Todo** — Parse and manage `assistant/todo.md` with section grouping, checkboxes, and `#tag` badges
+- **Inbox** — Quick-capture notes to daily `inbox/YYYY-MM-DD.md` files via a floating action button
+- **Editor** — Browse and edit any `.md` file in your assistant folder with a textarea editor
+- **Offline read** — Service worker caches files for offline reading
+- **Secure storage** — GitHub token encrypted with PBKDF2 + AES-GCM, stored in IndexedDB (never in localStorage)
+
+## Architecture
+
+```
+src/
+├── lib/           # Pure utilities (crypto, github-client, markdown-parser, storage)
+├── hooks/         # React hooks (useAuth, useTodos, useInbox, useFile, useGitHub)
+├── stores/        # Zustand stores (auth, files, settings)
+├── components/    # Shared UI components
+├── pages/         # Route-level pages (Auth, Todo, Editor, Inbox)
+└── tests/
+    ├── unit/      # Vitest unit tests
+    ├── integration/ # React Testing Library integration tests
+    └── e2e/       # Playwright E2E tests (require live GitHub token)
+```
+
+### Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Build | Vite 8 + TypeScript 6 |
+| UI | React 19 + Tailwind CSS v4 |
+| Routing | React Router v7 |
+| State | Zustand v5 |
+| Storage | Dexie v4 (IndexedDB) |
+| GitHub API | @octokit/rest v22 |
+| PWA | vite-plugin-pwa (Workbox) |
+| Testing | Vitest v4 + Testing Library + Playwright |
+
+## Setup
+
+### Prerequisites
+
+1. A GitHub personal access token with `repo` scope (read + write)
+2. A GitHub repository with a `assistant/todo.md` file
+
+### Development
+
+```bash
+npm install
+npm run dev
+```
+
+### Testing
+
+```bash
+npm test            # unit + integration tests
+npm run typecheck   # TypeScript validation
+```
+
+### Build & Deploy
+
+```bash
+npm run build       # Production build
+npm run preview     # Preview production build locally
+```
+
+The app is deployed to GitHub Pages via `.github/workflows/deploy.yml` on push to `main`.
+
+## Configuration
+
+On first launch, enter:
+1. **GitHub Token** — Personal access token with `repo` scope
+2. **Passphrase** — Used to encrypt the token in IndexedDB
+
+Settings (owner, repo, root folder, branch) are persisted in localStorage via Zustand persist.
+
+## File Structure Expected in GitHub Repo
+
+```
+assistant/
+├── todo.md              # Main task file
+├── inbox/
+│   └── 2025-01-15.md   # Daily capture files
+└── notes/              # Any other markdown files
+```
+
+### todo.md format
+
+```markdown
+# Todo
+
+## Today
+- [ ] Task to do #urgent
+- [x] Completed task
+
+## Backlog
+- [ ] Future task #admin
+```
+
+## Security
+
+- Token is **never stored in plaintext** or localStorage
+- Encrypted blob stored in IndexedDB using PBKDF2 (250,000 iterations) + AES-GCM-256
+- After 5 failed unlock attempts, the encrypted blob is wiped (brute-force protection)
+- Token lives in memory (Zustand) only during the session
+
 
 ```
 scaffold/

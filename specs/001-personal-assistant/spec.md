@@ -45,7 +45,7 @@ Someday),
   colorés.
 - Possibilité de cocher/décocher une tâche → commit immédiat.
 - Possibilité d'ajouter une tâche dans une section via un input rapide.
-- Possibilité de déplacer une tâche entre sections (drag & drop ou menu).
+- Possibilité de déplacer une tâche entre sections via un menu contextuel (v1). Le drag & drop est différé à v2.
 
 ### US-3 : Vue Inbox (capture rapide)
 
@@ -57,7 +57,7 @@ note vrac,
 **Critères d'acceptation** :
 - Bouton "+" flottant accessible depuis toutes les vues.
 - Au clic : modal avec un textarea, et un dropdown "destination"
-  (par défaut : `inbox/YYYY-MM-DD.md`, avec ajout en append).
+  (v1 : `inbox/YYYY-MM-DD.md` uniquement, ajout en append ; autres destinations différées à v2).
 - Save → commit immédiat.
 - Fermeture rapide (touche Escape ou tap en dehors).
 
@@ -72,12 +72,12 @@ l'éditer,
 - Liste des fichiers du dossier `assistant/` accessible via un menu latéral.
 - Au clic sur un fichier : vue split (preview rendu / source markdown), ou
   toggle entre les deux sur mobile.
-- Édition dans un textarea (v1) ou un éditeur Markdown léger (v2).
+- Édition dans un textarea natif (v1).
 - Bouton Save → commit avec message auto-généré (`update: gifts.md - via
-  PWA`). Possibilité de personnaliser le message en optionnel.
+  PWA`). Possibilité de personnaliser le message via un champ optionnel avant confirmation.
 - Indicateur visuel de modifications non sauvegardées.
 
-### US-5 : Vue agenda croisée
+### US-5 : Vue agenda croisée (différé v1.2)
 
 **En tant qu'** utilisateur en revue hebdo,
 **Je veux** voir côte à côte mes tâches "Cette semaine" et mon agenda
@@ -184,8 +184,7 @@ interface CalendarEvent {
   saisie du token.
 - **Rate limit GitHub atteint** (5000 req/h pour user-authenticated) :
   affichage du temps avant reset, blocage temporaire des écritures.
-- **Hors-ligne** : lecture depuis cache IndexedDB possible, écriture en
-  attente (queue), tentative de flush au retour réseau.
+- **Hors-ligne** : lecture depuis cache IndexedDB possible. Les écritures sont **DÉSACTIVÉES** sans connexion (Constitution P1 & P2) — l'utilisateur est notifié et doit attendre le retour réseau pour sauvegarder.
 - **Fichier supprimé sur GitHub** mais encore en cache : invalidation au
   prochain refresh.
 
