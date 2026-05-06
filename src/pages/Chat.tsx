@@ -3,6 +3,7 @@ import { useChatStore } from '../stores/chat'
 import { useAgent } from '../hooks/useAgent'
 import { useLLMKey } from '../hooks/useLLMKey'
 import { useAuthStore } from '../stores/auth'
+import { useFilesStore } from '../stores/files'
 import ChatBubble from '../components/ChatBubble'
 import ChatInput from '../components/ChatInput'
 import ToolCallIndicator from '../components/ToolCallIndicator'
@@ -86,6 +87,9 @@ export default function Chat() {
             status: 'done',
             result: event.toolResult,
           })
+          if (event.toolCall.name === 'update_file' || event.toolCall.name === 'create_file') {
+            useFilesStore.getState().bumpAgentWrite()
+          }
         } else if (event.type === 'done' && event.usage) {
           addTokens(event.usage.inputTokens, event.usage.outputTokens)
         } else if (event.type === 'error') {

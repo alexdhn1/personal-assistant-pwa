@@ -9,14 +9,17 @@ interface FileEntry {
 
 interface FilesState {
   openFiles: Record<string, FileEntry>
+  lastAgentWrite: number
   setFile: (path: string, entry: Omit<FileEntry, 'isDirty'>) => void
   markDirty: (path: string, content: string) => void
   markSaved: (path: string, newSha: string) => void
   removeFile: (path: string) => void
+  bumpAgentWrite: () => void
 }
 
 export const useFilesStore = create<FilesState>((set) => ({
   openFiles: {},
+  lastAgentWrite: 0,
   setFile: (path, entry) =>
     set((state) => ({
       openFiles: { ...state.openFiles, [path]: { ...entry, isDirty: false } },
@@ -40,4 +43,5 @@ export const useFilesStore = create<FilesState>((set) => ({
       const { [path]: _, ...rest } = state.openFiles
       return { openFiles: rest }
     }),
+  bumpAgentWrite: () => set({ lastAgentWrite: Date.now() }),
 }))

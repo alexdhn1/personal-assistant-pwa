@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useGitHub } from '../hooks/useGitHub'
 import { useTodos } from '../hooks/useTodos'
 import { useAuthStore } from '../stores/auth'
+import { useFilesStore } from '../stores/files'
 import TodoItem from '../components/TodoItem'
 import TaskInput from '../components/TaskInput'
 import type { TodoSection } from '../lib/markdown-parser'
@@ -19,10 +20,16 @@ export default function Todo() {
 
   const { sections, loading, error, load, toggle, addTask, moveTask } = useTodos(client)
   const [moveMenu, setMoveMenu] = useState<{ itemId: string; from: string } | null>(null)
+  const lastAgentWrite = useFilesStore((s) => s.lastAgentWrite)
 
   useEffect(() => {
     load()
   }, [])
+
+  // Reload when agent writes a file
+  useEffect(() => {
+    if (lastAgentWrite > 0) load()
+  }, [lastAgentWrite])
 
   // Handle AuthError → force re-auth
   useEffect(() => {
