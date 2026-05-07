@@ -11,7 +11,9 @@ async function collectEvents(iter: AsyncIterable<LLMStreamEvent>): Promise<LLMSt
 // A simple mock LLM client that streams a fixed text
 function makeMockClient(events: LLMStreamEvent[]): LLMClient {
   return {
-    async *stream(_messages: LLMMessage[], _tools: LLMToolDefinition[]) {
+    async *stream(_messages: LLMMessage[], _tools?: LLMToolDefinition[]) {
+      void _messages
+      void _tools
       for (const e of events) yield e
     },
   }

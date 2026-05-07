@@ -61,7 +61,7 @@ export function useAuth() {
         settings.defaultBranch
       )
       setAuth(token, client, password)
-    } catch (err) {
+    } catch {
       const newAttempts = currentAttempts + 1
       if (newAttempts >= MAX_ATTEMPTS) {
         // Wipe everything after 5 failures

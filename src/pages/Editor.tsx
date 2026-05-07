@@ -27,11 +27,13 @@ export default function Editor() {
   }, [loadTree, rootFolder])
 
   // Keep draft in sync when file changes
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     setDraft(content)
     setViewMode('read')
     setSaveError(null)
   }, [content, currentPath])
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   async function handleSelect(path: string) {
     setSaveError(null)

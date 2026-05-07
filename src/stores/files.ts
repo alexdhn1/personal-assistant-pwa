@@ -40,7 +40,8 @@ export const useFilesStore = create<FilesState>((set) => ({
     })),
   removeFile: (path) =>
     set((state) => {
-      const { [path]: _, ...rest } = state.openFiles
+      const { [path]: _removed, ...rest } = state.openFiles
+      void _removed
       return { openFiles: rest }
     }),
   bumpAgentWrite: () => set({ lastAgentWrite: Date.now() }),

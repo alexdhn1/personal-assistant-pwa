@@ -14,7 +14,7 @@ export default function Auth() {
 
   useEffect(() => {
     hasStoredToken().then((has) => setIsFirstTime(!has))
-  }, [])
+  }, [hasStoredToken])
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()

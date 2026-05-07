@@ -22,7 +22,7 @@ export default function Todo() {
       return
     }
     load()
-  }, [client])
+  }, [client, load, navigate])
 
   // Reload when agent writes a file (delay to let GitHub propagate)
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function Todo() {
       const timer = setTimeout(() => load(), 5000)
       return () => clearTimeout(timer)
     }
-  }, [lastAgentWrite])
+  }, [lastAgentWrite, load])
 
   // Handle AuthError → force re-auth
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function Todo() {
       clearAuth()
       navigate('/auth', { replace: true })
     }
-  }, [error])
+  }, [error, clearAuth, navigate])
 
   if (!client) return null
 
