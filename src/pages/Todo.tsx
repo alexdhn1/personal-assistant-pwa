@@ -27,7 +27,7 @@ export default function Todo() {
   // Reload when agent writes a file (delay to let GitHub propagate)
   useEffect(() => {
     if (lastAgentWrite > 0) {
-      const timer = setTimeout(() => load(), 2000)
+      const timer = setTimeout(() => load(), 5000)
       return () => clearTimeout(timer)
     }
   }, [lastAgentWrite])
